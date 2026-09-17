@@ -1692,3 +1692,26 @@ textarea {
     grid-template-columns: 1fr;
   }
 }
+.navcta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--text);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.navcta:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+.navcta:active {
+  transform: translateY(0);
+}
