@@ -737,3 +737,68 @@ nav button.active-tab::after{
 nav button:active{
   transform:scale(.92);
 }
+.stat{
+  position:relative;
+  overflow:hidden;
+  cursor:default;
+}
+
+.stat::before{
+  content:"";
+  position:absolute;
+  width:100px;
+  height:100px;
+  right:-45px;
+  top:-45px;
+  border-radius:50%;
+  background:rgba(90,110,255,.08);
+  transition:transform .45s ease;
+}
+
+.stat:hover::before{
+  transform:scale(2.5);
+}
+
+.stat b{
+  display:block;
+  font-size:34px;
+  font-weight:900;
+  letter-spacing:-.04em;
+  transition:transform .3s ease;
+}
+
+.stat:hover b{
+  transform:scale(1.08);
+}
+
+.stat span{
+  display:block;
+  margin-top:5px;
+  color:#697386;
+  transition:color .25s ease;
+}
+
+.stat:hover span{
+  color:#4057d8;
+}
+
+.stat-shine{
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:60%;
+  height:100%;
+  transform:skewX(-20deg);
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,.5),
+    transparent
+  );
+  transition:left .6s ease;
+  pointer-events:none;
+}
+
+.stat:hover .stat-shine{
+  left:140%;
+}
