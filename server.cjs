@@ -170,7 +170,7 @@ app.post("/api/reviews",auth,async(req,res)=>{const {ride_id,reviewee_id,rating,
 app.get("/api/saved-routes",auth,async(req,res)=>{const r=await q("SELECT * FROM saved_routes WHERE user_id=$1 ORDER BY created_at DESC",[req.user.id]);res.json(r.rows);});
 app.post("/api/saved-routes",auth,async(req,res)=>{const r=await q("INSERT INTO saved_routes(user_id,name,start_location,destination) VALUES($1,$2,$3,$4) RETURNING *",[req.user.id,req.body.name,req.body.start_location,req.body.destination]);res.status(201).json(r.rows[0]);});
 
-const clientDist=path.join(__dirname,"..","client","dist");
+const clientDist=path.join(__dirname,"dist");
 app.use(express.static(clientDist));
 app.get("*",(req,res)=>res.sendFile(path.join(clientDist,"index.html")));
 app.listen(process.env.PORT||10000,()=>console.log("SmartRide server running"));
