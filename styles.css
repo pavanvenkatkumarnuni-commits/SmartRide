@@ -1648,3 +1648,47 @@ textarea {
     flex-direction: column;
   }
 }
+/* Clean Report & Block section */
+.report-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.report-panel h3 {
+  margin-bottom: 6px;
+}
+
+.report-panel .muted {
+  margin: 0 0 18px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.report-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.report-fields input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.report-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.report-actions button {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .report-actions {
+    grid-template-columns: 1fr;
+  }
+}
