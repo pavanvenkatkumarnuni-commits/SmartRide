@@ -22,8 +22,7 @@ useEffect(()=>{
 },[]); const notify=x=>{setToast(x);setTimeout(()=>setToast(""),3500)};
  const logout=()=>{localStorage.removeItem("smartride_token");setUser(null);setPage("home")};
  if(!user)return <><Header user={null} setPage={setPage}/>{page==="home"?<Landing onStart={()=>setPage("auth")}/>:<Auth mode={auth} setMode={setAuth} onLogin={u=>{setUser(u);setPage("dashboard")}} notify={notify}/>} {toast&&<Toast text={toast}/>}</>;
- return <><Header user={user} setPage={setPage} logout={logout}/><main>
- {page==="dashboard"&&<Dashboard user={user} setPage={setPage} notify={notify}/>}
+return <><Header user={user} setPage={setPage} logout={logout}/><main key={page} className="page-transition"> {page==="dashboard"&&<Dashboard user={user} setPage={setPage} notify={notify}/>}
  {page==="create"&&<CreateRide notify={notify} onDone={()=>setPage("dashboard")}/>}
  {page==="find"&&<FindRide matches={matches} setMatches={setMatches} notify={notify}/>}
  {page==="requests"&&<Requests notify={notify} setRequests={setRequests} requests={requests}/>}
