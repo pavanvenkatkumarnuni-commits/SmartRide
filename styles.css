@@ -889,3 +889,29 @@ nav button:active{
     transform:translateY(0) scale(1);
   }
 }
+button{
+  position:relative;
+  overflow:hidden;
+}
+
+.click-ripple{
+  position:absolute;
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:rgba(255,255,255,.65);
+  transform:translate(-50%,-50%) scale(0);
+  pointer-events:none;
+  animation:rippleEffect .6s ease-out forwards;
+}
+
+@keyframes rippleEffect{
+  0%{
+    transform:translate(-50%,-50%) scale(0);
+    opacity:.8;
+  }
+  100%{
+    transform:translate(-50%,-50%) scale(18);
+    opacity:0;
+  }
+}
