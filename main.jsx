@@ -31,8 +31,52 @@ return <><Header user={user} setPage={setPage} logout={logout}/><main key={page}
  {page==="safety"&&<Safety notify={notify}/>}
  </main>{toast&&<Toast text={toast}/>}</>
 }
-function Header({user,setPage,logout}){return <header><div className="brand" onClick={()=>setPage(user?"dashboard":"home")}><span className="logo">S</span> SmartRide</div>{user?<nav><button onClick={()=>setPage("find")}>Find Ride</button><button onClick={()=>setPage("create")}>Offer Ride</button><button onClick={()=>setPage("requests")}>Requests</button><button onClick={()=>setPage("profile")}>Profile</button><button className="ghost" onClick={()=>setPage("safety")}>Safety</button><button className="link" onClick={logout}>Log out</button></nav>:<button className="navcta" onClick={()=>setPage("auth")}>Get started</button>}</header>}
+function Header({user,setPage,logout}){
+  const [active,setActive]=useState("dashboard");
 
+  const go=(page)=>{
+    setActive(page);
+    setPage(page);
+  };
+
+  return <header>
+    <div className="brand" onClick={()=>go(user?"dashboard":"home")}>
+      <span className="logo">S</span> SmartRide
+    </div>
+
+    {user?
+      <nav>
+        <button className={active==="find"?"active-tab":""} onClick={()=>go("find")}>
+          Find Ride
+        </button>
+
+        <button className={active==="create"?"active-tab":""} onClick={()=>go("create")}>
+          Offer Ride
+        </button>
+
+        <button className={active==="requests"?"active-tab":""} onClick={()=>go("requests")}>
+          Requests
+        </button>
+
+        <button className={active==="profile"?"active-tab":""} onClick={()=>go("profile")}>
+          Profile
+        </button>
+
+        <button className={`ghost ${active==="safety"?"active-tab":""}`} onClick={()=>go("safety")}>
+          Safety
+        </button>
+
+        <button className="link" onClick={logout}>
+          Log out
+        </button>
+      </nav>
+      :
+      <button className="navcta" onClick={()=>go("auth")}>
+        Get started
+      </button>
+    }
+  </header>
+}
 function Landing({onStart}){return <div className="landing"><section className="hero"><div><div className="eyebrow">COMMUTE TOGETHER</div><h1>Your route.<br/><em>Your people.</em></h1><p>SmartRide connects drivers and passengers traveling along similar routes, with transparent matching and safety-first controls.</p><div className="actions"><button className="primary" onClick={onStart}>Start riding</button><button className="secondary" onClick={onStart}>Offer a ride</button></div></div><div className="hero-card"><div className="mapfake"><span className="pin p1"></span><span className="pin p2"></span><span className="route"></span><div className="maplabel">Smart route match</div></div><div className="matchbox"><b>92%</b><span>route compatibility</span><small>2.1 km pickup • 8 min difference</small></div></div></section><section className="features"><Feature icon="⌁" title="Route-aware" text="Matches are based on route overlap, proximity and timing."/><Feature icon="✓" title="Verified profiles" text="Verification status and ratings are visible before you join."/><Feature icon="↗" title="Built for commutes" text="Save recurring routes and find people going your way."/><Feature icon="◈" title="Private by design" text="Only share the information needed for a safe ride."/></section></div>}
 
 function Feature({icon,title,text}){return <div className="feature"><i>{icon}</i><h3>{title}</h3><p>{text}</p></div>}
