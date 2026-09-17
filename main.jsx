@@ -50,8 +50,113 @@ function Profile({user,setUser,notify}){const [f,setF]=useState(user||{});const 
 
 function Chat({notify}){const [ride,setRide]=useState(""),[messages,setMessages]=useState([]),[body,setBody]=useState("");const load=()=>ride&&api(`/rides/${ride}/messages`).then(setMessages).catch(x=>notify(x.message));return <div className="container narrow"><div className="eyebrow">RIDE CHAT</div><h2>Talk to your ride group</h2><div className="panel"><input placeholder="Paste ride ID" value={ride} onChange={e=>setRide(e.target.value)}/><button className="secondary" onClick={load}>Open chat</button>{messages.map(m=><div className="message"><b>{m.sender_name||"Rider"}</b><span>{m.body}</span></div>)}{ride&&<form className="row" onSubmit={async e=>{e.preventDefault();try{await api(`/rides/${ride}/messages`,{method:"POST",body:JSON.stringify({body})});setBody("");load()}catch(x){notify(x.message)}}}><input value={body} onChange={e=>setBody(e.target.value)} placeholder="Message your ride group"/><button className="primary">Send</button></form>}</div></div>}
 
-function Safety({notify}){const [uid,setUid]=useState(""),[reason,setReason]=useState("");return <div className="container narrow"><div className="eyebrow">SAFETY & PRIVACY</div><h2>Stay in control</h2><div className="grid2"><div className="panel"><h3>Emergency help</h3><p>If you're in immediate danger, contact your local emergency service. SmartRide should not replace emergency services.</p><button className="secondary full" onClick={()=>notify("Emergency guidance displayed")}>Show safety guidance</button></div><div className="panel"><h3>Report or block</h3><input placeholder="User ID" value={uid} onChange={e=>setUid(e.target.value)}/><input placeholder="Reason" value={reason} onChange={e=>setReason(e.target.value)}/><div className="row"><button className="secondary" onClick={async()=>{try{await api("/users/block",{method:"POST",body:JSON.stringify({user_id:uid})});notify("User blocked")}catch(x){notify(x.message)}}}>Block</button><button className="primary" onClick={async()=>{try{await api("/reports",{method:"POST",body:JSON.stringify({user_id:uid,reason})});notify("Report submitted")}catch(x){notify(x.message)}}}>Report</button></div></div></div></div>}
+function Safety({notify}){
+  const [uid,setUid]=useState("");
+  const [reason,setReason]=useState("");
+  const [showGuidance,setShowGuidance]=useState(false);
 
+  return <div className="container narrow">
+    <div className="eyebrow">SAFETY & PRIVACY</div>
+    <h2>Stay in control</h2>
+
+    <div className="grid2">
+
+      <div className="panel">
+        <h3>Emergency help</h3>
+
+        <p>
+          If you're in immediate danger, contact your local emergency service.
+          SmartRide should not replace emergency services.
+        </p>
+
+        <button
+          className="secondary full"
+          onClick={()=>setShowGuidance(!showGuidance)}
+        >
+          {showGuidance ? "Hide safety guidance" : "Show safety guidance"}
+        </button>
+
+        {showGuidance && <div className="safety-guidance">
+
+          <h4>Safety guidance</h4>
+
+          <ol>
+            <li>If you are in immediate danger, contact your local emergency service.</li>
+            <li>Move to a safe and public location if possible.</li>
+            <li>Share your trip details with someone you trust.</li>
+            <li>Do not share passwords, OTPs, banking information, or sensitive personal information.</li>
+            <li>If you feel uncomfortable with another rider, leave the ride when it is safe to do so.</li>
+            <li>Use the Report or Block options below to flag concerning behaviour.</li>
+          </ol>
+
+          <div className="safety-note">
+            <b>Important:</b> SmartRide is not an emergency-response service.
+            For immediate danger, contact the appropriate local emergency service.
+          </div>
+
+        </div>}
+      </div>
+
+      <div className="panel">
+        <h3>Report or block</h3>
+
+        <input
+          placeholder="User ID"
+          value={uid}
+          onChange={e=>setUid(e.target.value)}
+        />
+
+        <input
+          placeholder="Reason"
+          value={reason}
+          onChange={e=>setReason(e.target.value)}
+        />
+
+        <div className="row">
+
+          <button
+            className="secondary"
+            onClick={async()=>{
+              try{
+                await api("/users/block",{
+                  method:"POST",
+                  body:JSON.stringify({user_id:uid})
+                });
+                notify("User blocked");
+              }catch(x){
+                notify(x.message);
+              }
+            }}
+          >
+            Block
+          </button>
+
+          <button
+            className="primary"
+            onClick={async()=>{
+              try{
+                await api("/reports",{
+                  method:"POST",
+                  body:JSON.stringify({
+                    user_id:uid,
+                    reason
+                  })
+                });
+                notify("Report submitted");
+              }catch(x){
+                notify(x.message);
+              }
+            }}
+          >
+            Report
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+}
 function Empty({title,text,action}){return <div className="empty"><div className="big">○</div><h4>{title}</h4><p>{text}</p>{action&&<button className="secondary" onClick={action}>Get started</button>}</div>}
 
 function Toast({text}){return <div className="toast">{text}</div>}
