@@ -699,3 +699,41 @@ select:focus{
     filter:blur(0);
   }
 }
+nav button{
+  position:relative;
+  overflow:hidden;
+}
+
+nav button.active-tab{
+  color:#4057d8;
+  background:linear-gradient(135deg,#eef1ff,#f5f2ff);
+  box-shadow:0 6px 18px rgba(70,85,200,.12);
+  transform:translateY(-2px);
+}
+
+nav button.active-tab::after{
+  content:"";
+  position:absolute;
+  left:20%;
+  right:20%;
+  bottom:3px;
+  height:3px;
+  border-radius:10px;
+  background:linear-gradient(90deg,#536dff,#7659ff);
+  animation:tabGlow .35s ease both;
+}
+
+@keyframes tabGlow{
+  from{
+    opacity:0;
+    transform:scaleX(0);
+  }
+  to{
+    opacity:1;
+    transform:scaleX(1);
+  }
+}
+
+nav button:active{
+  transform:scale(.92);
+}
