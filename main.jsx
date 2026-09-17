@@ -220,5 +220,20 @@ function Safety({notify}){
 function Empty({title,text,action}){return <div className="empty"><div className="big">○</div><h4>{title}</h4><p>{text}</p>{action&&<button className="secondary" onClick={action}>Get started</button>}</div>}
 
 function Toast({text}){return <div className="toast">{text}</div>}
+document.addEventListener("click",e=>{
+  const button=e.target.closest("button");
+  if(!button)return;
 
+  const ripple=document.createElement("span");
+  ripple.className="click-ripple";
+
+  const rect=button.getBoundingClientRect();
+
+  ripple.style.left=(e.clientX-rect.left)+"px";
+  ripple.style.top=(e.clientY-rect.top)+"px";
+
+  button.appendChild(ripple);
+
+  setTimeout(()=>ripple.remove(),650);
+});
 createRoot(document.getElementById("root")).render(<App/>);
