@@ -24,7 +24,19 @@ function auth(req,res,next) {
   catch { return res.status(401).json({error:"Invalid or expired session"}); }
 }
 async function q(sql, params=[]) { return pool.query(sql,params); }
+async function initDb() {
+  const schema = fs.readFileSync(path.join(__dirname, "schema.sql"), "utf8");
+  const statements = schema
+    .split(";")
+    .map(s => s.trim())
+    .filter(Boolean);
 
+  for (const statement of statements) {
+    await q(statement);
+  }
+
+  console.log("SmartRide database initialized");
+}
 app.get("/api/health",(req,res)=>res.json({ok:true,service:"SmartRide API"}));
 
 app.post("/api/auth/signup", async (req,res)=>{
@@ -173,4 +185,9 @@ app.post("/api/saved-routes",auth,async(req,res)=>{const r=await q("INSERT INTO 
 const clientDist=path.join(__dirname,"dist");
 app.use(express.static(clientDist));
 app.get("*",(req,res)=>res.sendFile(path.join(clientDist,"index.html")));
-app.listen(process.env.PORT||10000,()=>console.log("SmartRide server running"));
+initDb().then(() => {
+  app.listen(process.env.PORT||10000,()=>console.log("SmartRide server running"));
+}).catch(e => {
+  console.error("DATABASE INIT ERROR:", e);
+  process.exit(1);
+});
