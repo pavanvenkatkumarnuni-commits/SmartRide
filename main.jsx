@@ -157,22 +157,30 @@ function Safety({notify}){
         </div>}
       </div>
 
-      <div className="panel">
+      <div className="panel report-panel">
         <h3>Report or block</h3>
 
-        <input
-          placeholder="User ID"
-          value={uid}
-          onChange={e=>setUid(e.target.value)}
-        />
+        <p className="muted">
+          Enter the rider's User ID and choose an action.
+        </p>
 
-        <input
-          placeholder="Reason"
-          value={reason}
-          onChange={e=>setReason(e.target.value)}
-        />
+        <div className="report-fields">
 
-        <div className="row">
+          <input
+            placeholder="User ID"
+            value={uid}
+            onChange={e=>setUid(e.target.value)}
+          />
+
+          <input
+            placeholder="Reason for report"
+            value={reason}
+            onChange={e=>setReason(e.target.value)}
+          />
+
+        </div>
+
+        <div className="report-actions">
 
           <button
             className="secondary"
@@ -188,7 +196,7 @@ function Safety({notify}){
               }
             }}
           >
-            Block
+            Block user
           </button>
 
           <button
@@ -208,7 +216,7 @@ function Safety({notify}){
               }
             }}
           >
-            Report
+            Report user
           </button>
 
         </div>
