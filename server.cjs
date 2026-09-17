@@ -34,8 +34,7 @@ app.post("/api/auth/signup", async (req,res)=>{
     const hash=await bcrypt.hash(password,12);
     const r=await q("INSERT INTO users(name,email,password_hash,phone) VALUES($1,$2,$3,$4) RETURNING id,name,email,phone,verified,rating",[name,email.toLowerCase(),hash,phone||null]);
     res.status(201).json({user:r.rows[0],token:tokenFor(r.rows[0])});
-  } catch(e) { if(e.code==="23505") return res.status(409).json({error:"Email already registered"}); res.status(500).json({error:"Unable to create account"}); }
-});
+} catch(e) { console.error("SIGNUP ERROR:", e); if(e.code==="23505") return res.status(409).json({error:"Email already registered"}); res.status(500).json({error:"Unable to create account"}); }});
 
 app.post("/api/auth/login", async (req,res)=>{
   try {
