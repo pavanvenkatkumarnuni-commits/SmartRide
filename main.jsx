@@ -8,8 +8,18 @@ async function api(path,opts={}){const h={"Content-Type":"application/json",...(
 const fmtDate=x=>new Date(x+"T00:00:00").toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"});
 function App(){
  const [user,setUser]=useState(null),[page,setPage]=useState("home"),[auth,setAuth]=useState("login"),[toast,setToast]=useState(""),[rides,setRides]=useState([]),[requests,setRequests]=useState([]),[matches,setMatches]=useState([]);
- useEffect(()=>{if(getToken())api("/users/me").then(setUser).catch(()=>localStorage.removeItem("smartride_token"))},[]);
- const notify=x=>{setToast(x);setTimeout(()=>setToast(""),3500)};
+useEffect(()=>{
+  if(getToken()){
+    api("/users/me")
+      .then(u=>{
+        setUser(u);
+        setPage("dashboard");
+      })
+      .catch(()=>{
+        localStorage.removeItem("smartride_token");
+      });
+  }
+},[]); const notify=x=>{setToast(x);setTimeout(()=>setToast(""),3500)};
  const logout=()=>{localStorage.removeItem("smartride_token");setUser(null);setPage("home")};
  if(!user)return <><Header user={null} setPage={setPage}/>{page==="home"?<Landing onStart={()=>setPage("auth")}/>:<Auth mode={auth} setMode={setAuth} onLogin={u=>{setUser(u);setPage("dashboard")}} notify={notify}/>} {toast&&<Toast text={toast}/>}</>;
  return <><Header user={user} setPage={setPage} logout={logout}/><main>
