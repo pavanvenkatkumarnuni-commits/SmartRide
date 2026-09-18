@@ -3207,3 +3207,353 @@ label {
     opacity: .55;
   }
 }
+/* =========================================================
+   DYNAMIC NIGHT ROAD + MOVING TRAFFIC
+   ========================================================= */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 720px;
+}
+
+/* Road area */
+.road-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Perspective road */
+.road {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: -180px;
+  height: 520px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255,255,255,.025) 10%,
+      #111827 20%,
+      #090e19 50%,
+      #111827 80%,
+      rgba(255,255,255,.025) 90%,
+      transparent 100%
+    );
+
+  transform:
+    perspective(700px)
+    rotateX(62deg);
+
+  transform-origin: center bottom;
+
+  border-left:
+    2px solid rgba(255,255,255,.06);
+
+  border-right:
+    2px solid rgba(255,255,255,.06);
+
+  box-shadow:
+    0 -20px 100px rgba(82,75,220,.12);
+}
+
+/* Moving lane markings */
+.lane {
+  position: absolute;
+  top: -300px;
+  bottom: -100px;
+  width: 5px;
+
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,.65) 0 55px,
+      transparent 55px 120px
+    );
+
+  animation: laneMove 1.2s linear infinite;
+
+  opacity: .45;
+}
+
+.lane1 {
+  left: 25%;
+}
+
+.lane2 {
+  left: 50%;
+}
+
+.lane3 {
+  left: 75%;
+}
+
+@keyframes laneMove {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 0 175px;
+  }
+}
+
+/* Road glow */
+.road::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+
+  transform: translateX(-50%);
+
+  background:
+    linear-gradient(
+      to bottom,
+      transparent,
+      rgba(124,115,255,.7),
+      transparent
+    );
+
+  filter:
+    blur(2px);
+
+  opacity: .45;
+}
+
+/* Vehicles */
+.vehicle {
+  position: absolute;
+  z-index: 3;
+
+  font-size: 34px;
+
+  filter:
+    drop-shadow(
+      0 0 10px rgba(120,110,255,.65)
+    );
+
+  will-change: transform;
+
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* Cars */
+.car {
+  font-size: 38px;
+}
+
+.car1 {
+  left: 45%;
+  bottom: -80px;
+  animation:
+    driveCar1 6s linear infinite;
+}
+
+.car2 {
+  left: 67%;
+  bottom: -120px;
+  animation:
+    driveCar2 8s linear infinite;
+}
+
+/* Bikes */
+.bike {
+  font-size: 32px;
+}
+
+.bike1 {
+  left: 30%;
+  bottom: -100px;
+  animation:
+    driveBike1 5s linear infinite;
+}
+
+.bike2 {
+  left: 57%;
+  bottom: -140px;
+  animation:
+    driveBike2 7s linear infinite;
+}
+
+/* Vehicle 1 comes toward viewer */
+@keyframes driveCar1 {
+
+  0% {
+    transform:
+      translate3d(0, -20px, 0)
+      scale(.25);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  60% {
+    transform:
+      translate3d(-30px, -120px, 0)
+      scale(.65);
+  }
+
+  100% {
+    transform:
+      translate3d(-90px, -10px, 0)
+      scale(1.45);
+    opacity: 0;
+  }
+}
+
+/* Vehicle 2 */
+@keyframes driveCar2 {
+
+  0% {
+    transform:
+      translate3d(0, -50px, 0)
+      scale(.18);
+    opacity: 0;
+  }
+
+  18% {
+    opacity: 1;
+  }
+
+  55% {
+    transform:
+      translate3d(35px, -170px, 0)
+      scale(.6);
+  }
+
+  100% {
+    transform:
+      translate3d(100px, 0, 0)
+      scale(1.35);
+    opacity: 0;
+  }
+}
+
+/* Bike 1 */
+@keyframes driveBike1 {
+
+  0% {
+    transform:
+      translate3d(0, -20px, 0)
+      scale(.2);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  55% {
+    transform:
+      translate3d(40px, -150px, 0)
+      scale(.65);
+  }
+
+  100% {
+    transform:
+      translate3d(90px, 0, 0)
+      scale(1.25);
+    opacity: 0;
+  }
+}
+
+/* Bike 2 */
+@keyframes driveBike2 {
+
+  0% {
+    transform:
+      translate3d(0, -30px, 0)
+      scale(.2);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  60% {
+    transform:
+      translate3d(-45px, -160px, 0)
+      scale(.7);
+  }
+
+  100% {
+    transform:
+      translate3d(-100px, 0, 0)
+      scale(1.3);
+    opacity: 0;
+  }
+}
+
+/* Keep your text/cards above the road */
+.hero-content,
+.hero > div:first-child,
+.hero-card {
+  position: relative;
+  z-index: 10;
+}
+
+/* Dark gradient keeps text readable */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(5,8,17,.92) 0%,
+      rgba(5,8,17,.55) 42%,
+      rgba(5,8,17,.25) 70%,
+      rgba(5,8,17,.55) 100%
+    );
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+
+  .road {
+    left: -15%;
+    right: -15%;
+    bottom: -130px;
+    height: 430px;
+  }
+
+  .vehicle {
+    font-size: 27px;
+  }
+
+  .car {
+    font-size: 30px;
+  }
+
+  .bike {
+    font-size: 25px;
+  }
+
+  .hero {
+    min-height: 650px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+
+  .vehicle,
+  .lane {
+    animation: none;
+  }
+}
