@@ -2181,3 +2181,1029 @@ select {
     padding: 27px 21px;
   }
 }
+/* =========================================================
+   SMARTRIDE NIGHT DRIVE — PREMIUM DARK THEME
+   ========================================================= */
+
+:root {
+  --primary: #7c73ff;
+  --primary-dark: #6259f2;
+  --primary-light: #1b1a38;
+
+  --accent: #2ee6ad;
+  --accent-light: #102d27;
+
+  --text: #f5f7ff;
+  --text-soft: #9ca7bc;
+  --muted: #667085;
+
+  --dark: #070b14;
+  --dark-2: #0b1020;
+  --dark-3: #11182b;
+
+  --border: rgba(255,255,255,.09);
+
+  --surface: #0e1424;
+  --background: #070b14;
+
+  --shadow:
+    0 20px 60px rgba(0,0,0,.28);
+}
+
+/* =========================================================
+   GLOBAL DARK ENVIRONMENT
+   ========================================================= */
+
+html,
+body {
+  background: #070b14;
+}
+
+body {
+  color: #f5f7ff;
+}
+
+main {
+  background:
+    radial-gradient(
+      circle at 50% -10%,
+      rgba(99,91,255,.07),
+      transparent 35%
+    ),
+    #070b14;
+}
+
+/* =========================================================
+   DARK HEADER
+   ========================================================= */
+
+header {
+  background: rgba(7,11,20,.82);
+
+  border-bottom:
+    1px solid rgba(255,255,255,.07);
+
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+
+.brand {
+  color: #fff;
+}
+
+.logo {
+  background:
+    linear-gradient(
+      145deg,
+      #817aff,
+      #554bea
+    );
+
+  box-shadow:
+    0 8px 28px rgba(99,91,255,.35);
+}
+
+nav button {
+  color: #8993a8;
+}
+
+nav button:hover {
+  color: #fff;
+
+  background:
+    rgba(255,255,255,.06);
+}
+
+nav button.active-tab {
+  color: #a7a1ff;
+
+  background:
+    rgba(99,91,255,.13);
+}
+
+nav button.ghost {
+  border-color:
+    rgba(255,255,255,.10);
+}
+
+nav button.link {
+  color: #8993a8;
+}
+
+.navcta {
+  border-color: #fff;
+
+  color: #080b14;
+
+  background: #fff;
+
+  box-shadow:
+    0 8px 25px rgba(255,255,255,.08);
+}
+
+.navcta:hover {
+  background: #e8eaff;
+
+  box-shadow:
+    0 10px 30px rgba(255,255,255,.12);
+}
+
+/* =========================================================
+   PREMIUM NIGHT HERO
+   ========================================================= */
+
+.hero {
+  position: relative;
+
+  min-height: 720px;
+
+  color: #fff;
+
+  background:
+    radial-gradient(
+      ellipse at 70% 30%,
+      rgba(99,91,255,.18),
+      transparent 30%
+    ),
+    radial-gradient(
+      ellipse at 15% 80%,
+      rgba(32,201,151,.07),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #050811 0%,
+      #080d19 48%,
+      #0c1324 100%
+    );
+
+  overflow: hidden;
+}
+
+/* =========================================================
+   CITY LIGHTS
+   ========================================================= */
+
+.hero {
+  background-image:
+    radial-gradient(
+      circle at 12% 22%,
+      rgba(255,255,255,.045) 0 1px,
+      transparent 2px
+    ),
+    radial-gradient(
+      circle at 82% 16%,
+      rgba(124,115,255,.08) 0 1px,
+      transparent 2px
+    ),
+    radial-gradient(
+      circle at 70% 70%,
+      rgba(255,255,255,.035) 0 1px,
+      transparent 2px
+    ),
+    radial-gradient(
+      ellipse at 70% 30%,
+      rgba(99,91,255,.18),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #050811,
+      #080d19 50%,
+      #0c1324
+    );
+
+  background-size:
+    110px 110px,
+    160px 160px,
+    190px 190px,
+    auto,
+    auto;
+}
+
+/* =========================================================
+   MOVING ROAD
+   ========================================================= */
+
+.hero::before {
+  content: "";
+
+  position: absolute;
+
+  left: -10%;
+  right: -10%;
+
+  bottom: -80px;
+
+  height: 260px;
+
+  transform:
+    perspective(500px)
+    rotateX(52deg);
+
+  transform-origin: center bottom;
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 74px,
+      rgba(255,255,255,.20) 75px 78px,
+      transparent 79px 150px
+    ),
+    linear-gradient(
+      to bottom,
+      #111827,
+      #080c15
+    );
+
+  border-top:
+    1px solid rgba(255,255,255,.10);
+
+  box-shadow:
+    0 -15px 70px rgba(99,91,255,.08);
+
+  animation:
+    roadMove 1.8s linear infinite;
+
+  opacity: .85;
+
+  pointer-events: none;
+}
+
+@keyframes roadMove {
+  from {
+    background-position: 0 0, 0 0;
+  }
+
+  to {
+    background-position: 0 150px, 0 0;
+  }
+}
+
+/* =========================================================
+   MOVING CAR LIGHTS
+   ========================================================= */
+
+.hero::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+
+  bottom: 70px;
+
+  height: 110px;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      ellipse 8px 4px at 8% 72%,
+      #817aff 0 35%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 7px 4px at 32% 42%,
+      #2ee6ad 0 35%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 8px 4px at 56% 75%,
+      #817aff 0 35%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 7px 4px at 82% 35%,
+      #2ee6ad 0 35%,
+      transparent 70%
+    );
+
+  filter:
+    blur(.2px)
+    drop-shadow(
+      0 0 12px rgba(124,115,255,.75)
+    );
+
+  animation:
+    carsMove 5s linear infinite;
+}
+
+@keyframes carsMove {
+  0% {
+    transform: translateX(-15%);
+    opacity: .15;
+  }
+
+  12% {
+    opacity: 1;
+  }
+
+  50% {
+    transform: translateX(8%);
+  }
+
+  88% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(25%);
+    opacity: .15;
+  }
+}
+
+/* =========================================================
+   HERO CONTENT ABOVE ROAD
+   ========================================================= */
+
+.hero > div:first-child,
+.hero-card {
+  position: relative;
+
+  z-index: 5;
+}
+
+/* =========================================================
+   HERO TEXT
+   ========================================================= */
+
+.hero .eyebrow {
+  color: #918bff;
+}
+
+.hero h1 {
+  color: #fff;
+
+  text-shadow:
+    0 8px 40px rgba(0,0,0,.35);
+}
+
+.hero h1 em {
+  color: #8b84ff;
+}
+
+.hero p {
+  color: #9da8bc;
+}
+
+/* =========================================================
+   HERO BUTTONS
+   ========================================================= */
+
+.hero .primary {
+  color: #fff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #817aff,
+      #5c52ed
+    );
+
+  border-color: #817aff;
+
+  box-shadow:
+    0 12px 35px rgba(99,91,255,.28);
+}
+
+.hero .primary:hover {
+  box-shadow:
+    0 16px 42px rgba(99,91,255,.38);
+}
+
+.hero .secondary {
+  color: #d9deea;
+
+  background:
+    rgba(255,255,255,.06);
+
+  border-color:
+    rgba(255,255,255,.13);
+
+  backdrop-filter: blur(10px);
+}
+
+.hero .secondary:hover {
+  color: #fff;
+
+  background:
+    rgba(255,255,255,.10);
+}
+
+/* =========================================================
+   DARK MAP CARD
+   ========================================================= */
+
+.mapfake {
+  border-color:
+    rgba(255,255,255,.10);
+
+  background:
+    radial-gradient(
+      circle at 25% 20%,
+      rgba(99,91,255,.16),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 80% 75%,
+      rgba(32,201,151,.08),
+      transparent 25%
+    ),
+    linear-gradient(
+      145deg,
+      #172039,
+      #0d1425
+    );
+
+  box-shadow:
+    0 35px 90px rgba(0,0,0,.42);
+}
+
+/* road lines inside map */
+
+.mapfake::before {
+  background:
+    rgba(255,255,255,.045);
+
+  box-shadow:
+    0 80px 0 rgba(255,255,255,.03),
+    0 160px 0 rgba(255,255,255,.025);
+}
+
+.mapfake::after {
+  background:
+    rgba(255,255,255,.025);
+}
+
+.maplabel {
+  color: #dbe1ee;
+
+  background:
+    rgba(8,12,24,.70);
+
+  border-color:
+    rgba(255,255,255,.10);
+
+  backdrop-filter: blur(12px);
+}
+
+/* =========================================================
+   DARK MATCH BOX
+   ========================================================= */
+
+.matchbox {
+  color: #fff;
+
+  background:
+    rgba(17,24,39,.91);
+
+  border-color:
+    rgba(255,255,255,.10);
+
+  box-shadow:
+    0 25px 55px rgba(0,0,0,.35);
+
+  backdrop-filter: blur(20px);
+}
+
+.matchbox b {
+  color: #8d87ff;
+}
+
+.matchbox span {
+  color: #f1f3f8;
+}
+
+.matchbox small {
+  color: #7f8aa0;
+}
+
+/* =========================================================
+   FEATURES — DARK GLASS
+   ========================================================= */
+
+.features {
+  background: #070b14;
+}
+
+.feature {
+  border-color:
+    rgba(255,255,255,.075);
+
+  background:
+    linear-gradient(
+      145deg,
+      #101625,
+      #0c1220
+    );
+
+  box-shadow:
+    0 15px 40px rgba(0,0,0,.16);
+}
+
+.feature:hover {
+  border-color:
+    rgba(124,115,255,.25);
+
+  background:
+    linear-gradient(
+      145deg,
+      #131b2e,
+      #0d1424
+    );
+
+  box-shadow:
+    0 22px 55px rgba(0,0,0,.28);
+}
+
+.feature i {
+  color: #918bff;
+
+  background:
+    rgba(99,91,255,.12);
+
+  border-color:
+    rgba(124,115,255,.20);
+}
+
+.feature h3 {
+  color: #f3f5fa;
+}
+
+.feature p {
+  color: #8994a8;
+}
+
+/* =========================================================
+   DARK APPLICATION PANELS
+   ========================================================= */
+
+.panel {
+  color: #f5f7ff;
+
+  background:
+    linear-gradient(
+      145deg,
+      #101625,
+      #0d1321
+    );
+
+  border-color:
+    rgba(255,255,255,.075);
+
+  box-shadow:
+    0 18px 50px rgba(0,0,0,.16);
+}
+
+.panel:hover {
+  border-color:
+    rgba(255,255,255,.11);
+}
+
+.panel h3 {
+  color: #f5f7ff;
+}
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+
+h2 {
+  color: #f5f7ff;
+}
+
+p,
+.muted {
+  color: #8f9aae;
+}
+
+.stat {
+  border-color:
+    rgba(255,255,255,.075);
+
+  background:
+    linear-gradient(
+      145deg,
+      #101625,
+      #0c1220
+    );
+
+  box-shadow:
+    0 15px 40px rgba(0,0,0,.15);
+}
+
+.stat:hover {
+  box-shadow:
+    0 20px 50px rgba(0,0,0,.25);
+}
+
+.stat b {
+  color: #fff;
+}
+
+.stat span {
+  color: #8792a6;
+}
+
+.stat::after {
+  background:
+    rgba(99,91,255,.10);
+}
+
+/* =========================================================
+   RIDE ITEMS
+   ========================================================= */
+
+.ride-mini,
+.request {
+  border-color:
+    rgba(255,255,255,.07);
+
+  background:
+    rgba(255,255,255,.025);
+}
+
+.ride-mini:hover,
+.request:hover {
+  border-color:
+    rgba(124,115,255,.18);
+
+  background:
+    rgba(255,255,255,.045);
+}
+
+.ride-mini b,
+.request b {
+  color: #f3f5fa;
+}
+
+.ride-mini span,
+.request span {
+  color: #8490a5;
+}
+
+.ride-mini strong {
+  color: #9b96ff;
+
+  background:
+    rgba(99,91,255,.12);
+}
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+input,
+textarea,
+select {
+  color: #eef1f7;
+
+  background:
+    #0a101d;
+
+  border-color:
+    rgba(255,255,255,.10);
+}
+
+input:hover,
+textarea:hover,
+select:hover {
+  border-color:
+    rgba(255,255,255,.17);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  color: #fff;
+
+  background:
+    #0b1120;
+
+  border-color:
+    #7770f5;
+
+  box-shadow:
+    0 0 0 4px rgba(99,91,255,.10);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #626e83;
+}
+
+label {
+  color: #a8b1c1;
+}
+
+/* =========================================================
+   DAYS
+   ========================================================= */
+
+.day {
+  color: #8994a8;
+
+  background:
+    #0b111e;
+
+  border-color:
+    rgba(255,255,255,.09);
+}
+
+.day:hover {
+  color: #fff;
+
+  border-color:
+    rgba(255,255,255,.18);
+}
+
+.day.active {
+  color: #a29dff;
+
+  background:
+    rgba(99,91,255,.13);
+
+  border-color:
+    rgba(124,115,255,.45);
+}
+
+/* =========================================================
+   SEARCH BAR
+   ========================================================= */
+
+.searchbar {
+  background:
+    linear-gradient(
+      145deg,
+      #101625,
+      #0d1321
+    );
+}
+
+/* =========================================================
+   MATCH RESULTS
+   ========================================================= */
+
+.avatar {
+  color: #9a95ff;
+
+  background:
+    rgba(99,91,255,.12);
+
+  border-color:
+    rgba(124,115,255,.20);
+}
+
+.driver b {
+  color: #f4f6fa;
+}
+
+.driver span,
+.score span {
+  color: #818ca1;
+}
+
+.score b {
+  color: #918bff;
+}
+
+.routecol {
+  background:
+    rgba(255,255,255,.025);
+
+  border-color:
+    rgba(255,255,255,.07);
+}
+
+.routecol strong {
+  color: #e9edf5;
+}
+
+.routecol span {
+  color: #7e899d;
+}
+
+.why {
+  background:
+    rgba(255,255,255,.025);
+
+  border-color:
+    rgba(255,255,255,.07);
+}
+
+.why b {
+  color: #e7eaf1;
+}
+
+.why span {
+  color: #7f8a9f;
+}
+
+/* =========================================================
+   EMPTY STATES
+   ========================================================= */
+
+.empty .big {
+  color: #918bff;
+
+  background:
+    rgba(99,91,255,.12);
+
+  border-color:
+    rgba(124,115,255,.20);
+}
+
+.empty h3,
+.empty h4 {
+  color: #f3f5fa;
+}
+
+/* =========================================================
+   AUTH
+   ========================================================= */
+
+.authwrap {
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(99,91,255,.12),
+      transparent 38%
+    ),
+    #070b14;
+}
+
+.auth {
+  background:
+    linear-gradient(
+      145deg,
+      #111829,
+      #0c1220
+    );
+
+  border-color:
+    rgba(255,255,255,.08);
+
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.35);
+}
+
+.auth::before {
+  background:
+    linear-gradient(
+      90deg,
+      #817aff,
+      #2ee6ad
+    );
+}
+
+/* =========================================================
+   SAFETY
+   ========================================================= */
+
+.safety-note {
+  color: #8590a4;
+
+  background:
+    rgba(255,255,255,.025);
+
+  border-color:
+    rgba(255,255,255,.08);
+}
+
+.safety-guidance {
+  color: #e8ebf2;
+
+  background:
+    linear-gradient(
+      145deg,
+      #11182a,
+      #0d1423
+    );
+
+  border-color:
+    rgba(124,115,255,.18);
+}
+
+.safety-guidance li {
+  color: #8792a6;
+}
+
+/* =========================================================
+   CHAT
+   ========================================================= */
+
+.message {
+  background:
+    rgba(255,255,255,.035);
+
+  border-color:
+    rgba(255,255,255,.07);
+}
+
+.message b {
+  color: #eef1f6;
+}
+
+.message span {
+  color: #8994a8;
+}
+
+/* =========================================================
+   REPORT / BLOCK
+   ========================================================= */
+
+.report-panel {
+  background:
+    linear-gradient(
+      145deg,
+      #101625,
+      #0d1321
+    );
+}
+
+/* =========================================================
+   BADGES
+   ========================================================= */
+
+.badge.pending {
+  color: #f0c76a;
+
+  background:
+    rgba(240,199,106,.10);
+}
+
+.badge.accepted {
+  color: #49d9ae;
+
+  background:
+    rgba(46,230,173,.10);
+}
+
+.badge.rejected {
+  color: #f08080;
+
+  background:
+    rgba(208,74,74,.10);
+}
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+.toast {
+  background:
+    linear-gradient(
+      135deg,
+      #182039,
+      #0d1424
+    );
+
+  border-color:
+    rgba(255,255,255,.10);
+
+  box-shadow:
+    0 25px 60px rgba(0,0,0,.4);
+}
+
+/* =========================================================
+   REDUCE MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .hero::before,
+  .hero::after,
+  .page-transition,
+  .toast {
+    animation: none;
+  }
+}
+
+/* =========================================================
+   MOBILE ROAD
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .hero {
+    min-height: 650px;
+  }
+
+  .hero::before {
+    bottom: -45px;
+
+    height: 180px;
+
+    transform:
+      perspective(420px)
+      rotateX(55deg);
+  }
+
+  .hero::after {
+    bottom: 55px;
+
+    opacity: .55;
+  }
+}
