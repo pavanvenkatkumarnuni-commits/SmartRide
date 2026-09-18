@@ -150,8 +150,112 @@ function CreateRide({notify,onDone}){const [f,setF]=useState({start_location:"",
   </select>
 </label><label className="wide">Description<textarea value={f.description} onChange={e=>setF({...f,description:e.target.value})} placeholder="Pickup flexibility, luggage, music preferences…"/></label><label className="check wide"><input type="checkbox" checked={f.recurring} onChange={e=>setF({...f,recurring:e.target.checked})}/> Recurring ride</label>{f.recurring&&<div className="days wide">{days.map(d=><button type="button" className={f.recurring_days.includes(d)?"day active":"day"} onClick={()=>setF({...f,recurring_days:f.recurring_days.includes(d)?f.recurring_days.filter(x=>x!==d):[...f.recurring_days,d]})}>{d}</button>)}</div>}<button className="primary wide">Publish ride</button></form></div>}
 
-function FindRide({matches,setMatches,notify}){const [f,setF]=useState({start_location:"",destination:"",date:"",preferred_time:""});const search=async e=>{e.preventDefault();try{setMatches(await api("/rides/match",{method:"POST",body:JSON.stringify(f)}))}catch(x){notify(x.message)}};return <div className="container"><div className="eyebrow">FIND A RIDE</div><h2>Who's going your way?</h2><form className="searchbar panel" onSubmit={search}><input required placeholder="Starting location" value={f.start_location} onChange={e=>setF({...f,start_location:e.target.value})}/><span>→</span><input required placeholder="Destination" value={f.destination} onChange={e=>setF({...f,destination:e.target.value})}/><input type="date" required value={f.date} onChange={e=>setF({...f,date:e.target.value})}/><input type="time" value={f.preferred_time} onChange={e=>setF({...f,preferred_time:e.target.value})}/><button className="primary">Match</button></form>{matches.length?<div className="results">{matches.map(m=><MatchCard key={m.id} m={m} notify={notify}/>)}</div>:<div className="empty panel"><div className="big">⌁</div><h3>Search real available rides</h3><p>Enter your route and travel date to calculate compatibility against rides in the database.</p></div>}</div>}
+function FindRide({matches,setMatches,notify}){
+  const [f,setF]=useState({
+    start_location:"",
+    destination:"",
+    date:"",
+    preferred_time:""
+  });
 
+  const locations=[
+    "SASI Engineering College",
+    "Tadepalligudem",
+    "Kadakatla",
+    "Chinatadepalli",
+    "Kadiyadda",
+    "Pedatadepalli",
+    "Ramannagudem",
+    "Venkatramannagudem",
+    "Nallajerla",
+    "Tanuku",
+    "Undrajavaram",
+    "Duvva",
+    "Other"
+  ];
+
+  const search=async e=>{
+    e.preventDefault();
+
+    try{
+      setMatches(await api("/rides/match",{
+        method:"POST",
+        body:JSON.stringify(f)
+      }));
+    }catch(x){
+      notify(x.message);
+    }
+  };
+
+  return <div className="container">
+    <div className="eyebrow">FIND A RIDE</div>
+
+    <h2>Who's going your way?</h2>
+
+    <form className="searchbar panel" onSubmit={search}>
+
+      <select
+        required
+        value={f.start_location}
+        onChange={e=>setF({...f,start_location:e.target.value})}
+      >
+        <option value="">Select starting location</option>
+        {locations.map(location=>
+          <option key={location}>{location}</option>
+        )}
+      </select>
+
+      <span>→</span>
+
+      <select
+        required
+        value={f.destination}
+        onChange={e=>setF({...f,destination:e.target.value})}
+      >
+        <option value="">Select destination</option>
+        {locations.map(location=>
+          <option key={location}>{location}</option>
+        )}
+      </select>
+
+      <input
+        type="date"
+        required
+        value={f.date}
+        onChange={e=>setF({...f,date:e.target.value})}
+      />
+
+      <input
+        type="time"
+        value={f.preferred_time}
+        onChange={e=>setF({...f,preferred_time:e.target.value})}
+      />
+
+      <button className="primary">Match</button>
+
+    </form>
+
+    {matches.length?
+      <div className="results">
+        {matches.map(m=>
+          <MatchCard key={m.id} m={m} notify={notify}/>
+        )}
+      </div>
+      :
+      <div className="empty panel">
+        <div className="big">⌁</div>
+
+        <h3>Search real available rides</h3>
+
+        <p>
+          Select your route and travel date to find students and staff
+          traveling your way.
+        </p>
+      </div>
+    }
+
+  </div>
+}
 function MatchCard({m,notify}){const [requested,setRequested]=useState(false);const request=async()=>{try{await api(`/rides/${m.id}/request`,{method:"POST",body:JSON.stringify({})});setRequested(true);notify("Join request sent")}catch(x){notify(x.message)}};return <div className="panel matchcard"><div className="driver"><div className="avatar">{m.owner_name?.[0]}</div><div><b>{m.owner_name}</b><span>{m.owner_verified?"✓ Verified · ":""}{m.owner_rating?`${Number(m.owner_rating).toFixed(1)} ★`:"New rider"}</span></div></div><div className="score"><b>{m.match.compatibility}%</b><span>match</span></div><div className="routecol"><strong>{m.start_location}</strong><i>│</i><strong>{m.destination}</strong><span>{fmtDate(m.date)} · {String(m.departure_time).slice(0,5)} · {m.vehicle_type}</span></div><div className="why"><b>Why it matches</b><span>{m.match.route_overlap}% route overlap</span><span>{m.match.pickup_distance_km===null?"Pickup distance needs mapped coordinates":`${m.match.pickup_distance_km} km pickup distance`}</span><span>{m.match.time_score>=75?"Departure time within your range":"Departure timing differs"}</span><span>{m.match.recurring_score>=75?"Recurring days align":"Recurring pattern not aligned"}</span></div><button className="primary" disabled={requested} onClick={request}>{requested?"Requested":"Join ride"}</button></div>}
 
 function Requests({notify}){const [incoming,setIncoming]=useState([]),[mine,setMine]=useState([]);const load=()=>Promise.all([api("/requests/incoming"),api("/requests/mine")]).then(([a,b])=>{setIncoming(a);setMine(b)}).catch(x=>notify(x.message));useEffect(()=>{load()},[]);const act=async(id,status)=>{try{await api(`/requests/${id}`,{method:"PATCH",body:JSON.stringify({status})});notify(`Request ${status}`);load()}catch(x){notify(x.message)}};return <div className="container"><div className="eyebrow">RIDE REQUESTS</div><h2>Manage connections</h2><section className="grid2"><div className="panel"><h3>Incoming</h3>{incoming.length?incoming.map(x=><div className="request" key={x.id}><div><b>{x.requester_name}</b><span>{x.start_location} → {x.destination}<br/>{fmtDate(x.date)} · {String(x.departure_time).slice(0,5)}</span></div>{x.status==="pending"?<div className="row"><button className="primary small" onClick={()=>act(x.id,"accepted")}>Accept</button><button className="secondary small" onClick={()=>act(x.id,"rejected")}>Reject</button></div>:<Badge text={x.status}/>}</div>):<Empty title="No incoming requests" text="New join requests will appear here."/>}</div><div className="panel"><h3>My requests</h3>{mine.length?mine.map(x=><div className="request" key={x.id}><div><b>{x.owner_name}</b><span>{x.start_location} → {x.destination}<br/>{fmtDate(x.date)}</span></div><Badge text={x.status}/></div>):<Empty title="No requests" text="Find a ride and request a seat."/>}</div></section></div>}
