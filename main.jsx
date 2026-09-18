@@ -96,7 +96,49 @@ function Stat({n,t}){
 }
 function RideMini({r}){return <div className="ride-mini"><div><b>{r.start_location} → {r.destination}</b><span>{fmtDate(r.date)} · {String(r.departure_time).slice(0,5)} · {r.vehicle_type}</span></div><strong>{r.available_seats} seats</strong></div>}
 
-function CreateRide({notify,onDone}){const [f,setF]=useState({start_location:"",destination:"",date:"",departure_time:"",available_seats:3,vehicle_type:"Car",recurring:false,recurring_days:[],description:""});const days=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];const sub=async e=>{e.preventDefault();try{await api("/rides",{method:"POST",body:JSON.stringify(f)});notify("Ride created successfully");onDone()}catch(x){notify(x.message)}};return <div className="container narrow"><div className="eyebrow">OFFER A RIDE</div><h2>Create a commute</h2><form className="panel formgrid" onSubmit={sub}><label>Starting location<input required value={f.start_location} onChange={e=>setF({...f,start_location:e.target.value})} placeholder="e.g. Gachibowli"/></label><label>Destination<input required value={f.destination} onChange={e=>setF({...f,destination:e.target.value})} placeholder="e.g. HITECH City"/></label><label>Date<input type="date" required value={f.date} onChange={e=>setF({...f,date:e.target.value})}/></label><label>Departure time<input type="time" required value={f.departure_time} onChange={e=>setF({...f,departure_time:e.target.value})}/></label><label>Available seats<input type="number" min="1" max="8" required value={f.available_seats} onChange={e=>setF({...f,available_seats:e.target.value})}/></label><label>Vehicle type<select value={f.vehicle_type} onChange={e=>setF({...f,vehicle_type:e.target.value})}><option>Car</option><option>SUV</option><option>EV</option><option>Van</option><option>Other</option></select></label><label className="wide">Description<textarea value={f.description} onChange={e=>setF({...f,description:e.target.value})} placeholder="Pickup flexibility, luggage, music preferences…"/></label><label className="check wide"><input type="checkbox" checked={f.recurring} onChange={e=>setF({...f,recurring:e.target.checked})}/> Recurring ride</label>{f.recurring&&<div className="days wide">{days.map(d=><button type="button" className={f.recurring_days.includes(d)?"day active":"day"} onClick={()=>setF({...f,recurring_days:f.recurring_days.includes(d)?f.recurring_days.filter(x=>x!==d):[...f.recurring_days,d]})}>{d}</button>)}</div>}<button className="primary wide">Publish ride</button></form></div>}
+function CreateRide({notify,onDone}){const [f,setF]=useState({start_location:"",destination:"",date:"",departure_time:"",available_seats:3,vehicle_type:"Car",recurring:false,recurring_days:[],description:""});const days=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];const sub=async e=>{e.preventDefault();try{await api("/rides",{method:"POST",body:JSON.stringify(f)});notify("Ride created successfully");onDone()}catch(x){notify(x.message)}};return <div className="container narrow"><div className="eyebrow">OFFER A RIDE</div><h2>Create a commute</h2><form className="panel formgrid" onSubmit={sub}><label>Starting location
+  <select
+    required
+    value={f.start_location}
+    onChange={e=>setF({...f,start_location:e.target.value})}
+  >
+    <option value="">Select your village / area</option>
+    <option>SASI Engineering College</option>
+    <option>Tadepalligudem</option>
+    <option>Kadakatla</option>
+    <option>Chinatadepalli</option>
+    <option>Kadiyadda</option>
+    <option>Pedatadepalli</option>
+    <option>Ramannagudem</option>
+    <option>Venkatramannagudem</option>
+    <option>Nallajerla</option>
+    <option>Tanuku</option>
+    <option>Undrajavaram</option>
+    <option>Duvva</option>
+    <option>Other</option>
+  </select>
+</label><label>Destination
+  <select
+    required
+    value={f.destination}
+    onChange={e=>setF({...f,destination:e.target.value})}
+  >
+    <option value="">Select destination</option>
+    <option>SASI Engineering College</option>
+    <option>Tadepalligudem</option>
+    <option>Kadakatla</option>
+    <option>Chinatadepalli</option>
+    <option>Kadiyadda</option>
+    <option>Pedatadepalli</option>
+    <option>Ramannagudem</option>
+    <option>Venkatramannagudem</option>
+    <option>Nallajerla</option>
+    <option>Tanuku</option>
+    <option>Undrajavaram</option>
+    <option>Duvva</option>
+    <option>Other</option>
+  </select>
+</label><label>Date<input type="date" required value={f.date} onChange={e=>setF({...f,date:e.target.value})}/></label><label>Departure time<input type="time" required value={f.departure_time} onChange={e=>setF({...f,departure_time:e.target.value})}/></label><label>Available seats<input type="number" min="1" max="8" required value={f.available_seats} onChange={e=>setF({...f,available_seats:e.target.value})}/></label><label>Vehicle type<select value={f.vehicle_type} onChange={e=>setF({...f,vehicle_type:e.target.value})}><option>Car</option><option>SUV</option><option>EV</option><option>Van</option><option>Other</option></select></label><label className="wide">Description<textarea value={f.description} onChange={e=>setF({...f,description:e.target.value})} placeholder="Pickup flexibility, luggage, music preferences…"/></label><label className="check wide"><input type="checkbox" checked={f.recurring} onChange={e=>setF({...f,recurring:e.target.checked})}/> Recurring ride</label>{f.recurring&&<div className="days wide">{days.map(d=><button type="button" className={f.recurring_days.includes(d)?"day active":"day"} onClick={()=>setF({...f,recurring_days:f.recurring_days.includes(d)?f.recurring_days.filter(x=>x!==d):[...f.recurring_days,d]})}>{d}</button>)}</div>}<button className="primary wide">Publish ride</button></form></div>}
 
 function FindRide({matches,setMatches,notify}){const [f,setF]=useState({start_location:"",destination:"",date:"",preferred_time:""});const search=async e=>{e.preventDefault();try{setMatches(await api("/rides/match",{method:"POST",body:JSON.stringify(f)}))}catch(x){notify(x.message)}};return <div className="container"><div className="eyebrow">FIND A RIDE</div><h2>Who's going your way?</h2><form className="searchbar panel" onSubmit={search}><input required placeholder="Starting location" value={f.start_location} onChange={e=>setF({...f,start_location:e.target.value})}/><span>→</span><input required placeholder="Destination" value={f.destination} onChange={e=>setF({...f,destination:e.target.value})}/><input type="date" required value={f.date} onChange={e=>setF({...f,date:e.target.value})}/><input type="time" value={f.preferred_time} onChange={e=>setF({...f,preferred_time:e.target.value})}/><button className="primary">Match</button></form>{matches.length?<div className="results">{matches.map(m=><MatchCard key={m.id} m={m} notify={notify}/>)}</div>:<div className="empty panel"><div className="big">⌁</div><h3>Search real available rides</h3><p>Enter your route and travel date to calculate compatibility against rides in the database.</p></div>}</div>}
 
