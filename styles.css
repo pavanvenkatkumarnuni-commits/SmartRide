@@ -473,17 +473,17 @@ p {
 
   inset: 0;
 
-  z-index: 4;
+  z-index: 1;
 
   pointer-events: none;
 
   background:
     linear-gradient(
       90deg,
-      rgba(4,7,14,.82) 0%,
-      rgba(4,7,14,.36) 42%,
-      rgba(4,7,14,.16) 68%,
-      rgba(4,7,14,.52) 100%
+      rgba(4,7,14,.88) 0%,
+      rgba(4,7,14,.48) 42%,
+      rgba(4,7,14,.18) 68%,
+      rgba(4,7,14,.42) 100%
     );
 }
 
@@ -491,11 +491,12 @@ p {
    HERO CONTENT
    ========================================================= */
 
-.hero > div:first-child {
+.hero-copy {
   position: relative;
 
   z-index: 20;
 
+  width: min(100%, 620px);
   max-width: 620px;
 }
 
@@ -570,7 +571,7 @@ p {
 
   inset: 0;
 
-  z-index: 2;
+  z-index: 5;
 
   overflow: hidden;
 
@@ -2774,5 +2775,226 @@ select {
   .secondary,
   .ride-mini {
     transition: none;
+  }
+}
+
+
+/* =========================================================
+   FINAL HERO ROAD / TRAFFIC OVERRIDES
+   These selectors match the current Landing JSX.
+   ========================================================= */
+
+.road-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.road {
+  z-index: 1;
+  left: 4%;
+  right: 4%;
+  bottom: -225px;
+  height: 610px;
+}
+
+.hero-copy,
+.hero-card {
+  z-index: 20;
+}
+
+.traffic {
+  position: absolute;
+  z-index: 8;
+  display: block;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.car {
+  width: 74px;
+  height: 34px;
+  border-radius: 13px 13px 9px 9px;
+  background: linear-gradient(180deg, #8d87ff 0%, #5d55e9 100%);
+  border: 1px solid rgba(255,255,255,.2);
+  box-shadow: 0 0 24px rgba(124,115,255,.5), 0 12px 25px rgba(0,0,0,.5);
+}
+
+.car::before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  top: -10px;
+  width: 45px;
+  height: 18px;
+  border-radius: 13px 13px 4px 4px;
+  background: #252d4b;
+  border: 1px solid rgba(255,255,255,.14);
+}
+
+.car .window {
+  position: absolute;
+  left: 19px;
+  top: -6px;
+  width: 35px;
+  height: 10px;
+  border-radius: 7px 7px 2px 2px;
+  background: linear-gradient(135deg, rgba(190,211,255,.5), rgba(40,52,86,.9));
+  z-index: 2;
+}
+
+.car .lamp {
+  position: absolute;
+  top: 11px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e9ffff;
+  box-shadow: 0 0 13px rgba(170,255,255,.9);
+}
+
+.car .lamp.left { left: 7px; }
+.car .lamp.right { right: 7px; }
+
+.car-one {
+  left: 40%;
+  bottom: 90px;
+  animation: trafficCarOne 6.5s linear infinite;
+}
+
+.car-two {
+  left: 61%;
+  bottom: 55px;
+  transform: scale(.78);
+  animation: trafficCarTwo 8s linear infinite;
+  animation-delay: -3s;
+}
+
+.bike {
+  width: 62px;
+  height: 30px;
+  filter: drop-shadow(0 0 12px rgba(46,230,173,.45));
+}
+
+.bike .wheel {
+  position: absolute;
+  bottom: 0;
+  width: 17px;
+  height: 17px;
+  border: 3px solid #dce4f5;
+  border-radius: 50%;
+  background: #080d17;
+  box-shadow: 0 0 8px rgba(255,255,255,.18);
+}
+
+.bike .wheel-left { left: 5px; }
+.bike .wheel-right { right: 5px; }
+
+.bike .bike-body {
+  position: absolute;
+  left: 19px;
+  top: 7px;
+  width: 26px;
+  height: 4px;
+  border-radius: 4px;
+  background: #2ee6ad;
+  box-shadow: 0 0 12px rgba(46,230,173,.7);
+  transform: rotate(-8deg);
+}
+
+.bike .bike-body::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: -7px;
+  width: 17px;
+  height: 10px;
+  border-left: 3px solid #dce4f5;
+  border-top: 3px solid #dce4f5;
+  transform: skew(-20deg);
+}
+
+.bike-one {
+  left: 27%;
+  bottom: 75px;
+  animation: trafficBikeOne 5.5s linear infinite;
+  animation-delay: -1.7s;
+}
+
+.bike-two {
+  left: 54%;
+  bottom: 45px;
+  transform: scale(.8);
+  animation: trafficBikeTwo 7s linear infinite;
+  animation-delay: -4s;
+}
+
+@keyframes trafficCarOne {
+  0% { transform: translate3d(-80px, 150px, 0) scale(.28); opacity: 0; }
+  12% { opacity: .95; }
+  50% { transform: translate3d(10px, -40px, 0) scale(.62); opacity: 1; }
+  100% { transform: translate3d(120px, -440px, 0) scale(1.55); opacity: 0; }
+}
+
+@keyframes trafficCarTwo {
+  0% { transform: translate3d(70px, 130px, 0) scale(.24); opacity: 0; }
+  12% { opacity: .9; }
+  50% { transform: translate3d(-10px, -55px, 0) scale(.58); opacity: 1; }
+  100% { transform: translate3d(-135px, -430px, 0) scale(1.5); opacity: 0; }
+}
+
+@keyframes trafficBikeOne {
+  0% { transform: translate3d(-55px, 130px, 0) scale(.25); opacity: 0; }
+  15% { opacity: .9; }
+  52% { transform: translate3d(20px, -65px, 0) scale(.62); opacity: 1; }
+  100% { transform: translate3d(110px, -435px, 0) scale(1.35); opacity: 0; }
+}
+
+@keyframes trafficBikeTwo {
+  0% { transform: translate3d(55px, 125px, 0) scale(.24); opacity: 0; }
+  16% { opacity: .9; }
+  52% { transform: translate3d(-25px, -75px, 0) scale(.62); opacity: 1; }
+  100% { transform: translate3d(-120px, -440px, 0) scale(1.3); opacity: 0; }
+}
+
+@media (max-width: 1000px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: 760px;
+  }
+
+  .hero-copy {
+    max-width: 650px;
+  }
+
+  .hero-card {
+    justify-self: start;
+    max-width: 650px;
+  }
+}
+
+@media (max-width: 700px) {
+  .hero {
+    min-height: 720px;
+  }
+
+  .road {
+    left: -18%;
+    right: -18%;
+    bottom: -175px;
+    height: 500px;
+  }
+
+  .traffic {
+    transform-origin: center bottom;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .traffic,
+  .lane {
+    animation: none !important;
   }
 }
