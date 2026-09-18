@@ -77,68 +77,92 @@ function Header({user,setPage,logout}){
     }
   </header>
 }
-function Landing({onStart}){
+function Landing({onStart}) {
   return (
     <div className="landing">
-
       <section className="hero">
 
-        {/* Dynamic road traffic */}
-        <div className="road-scene">
+        {/* MOVING ROAD BACKGROUND */}
+        <div className="road-scene" aria-hidden="true">
           <div className="road">
-            <div className="lane lane1"></div>
-            <div className="lane lane2"></div>
-            <div className="lane lane3"></div>
+            <span className="road-line line-one"></span>
+            <span className="road-line line-two"></span>
+            <span className="road-line line-three"></span>
           </div>
 
-          <div className="vehicle car car1">🚗</div>
-          <div className="vehicle car car2">🚙</div>
-          <div className="vehicle bike bike1">🏍️</div>
-          <div className="vehicle bike bike2">🛵</div>
+          <div className="traffic car car-one">
+            <span className="window"></span>
+            <span className="lamp left"></span>
+            <span className="lamp right"></span>
+          </div>
+
+          <div className="traffic car car-two">
+            <span className="window"></span>
+            <span className="lamp left"></span>
+            <span className="lamp right"></span>
+          </div>
+
+          <div className="traffic bike bike-one">
+            <span className="wheel wheel-left"></span>
+            <span className="wheel wheel-right"></span>
+            <span className="bike-body"></span>
+          </div>
+
+          <div className="traffic bike bike-two">
+            <span className="wheel wheel-left"></span>
+            <span className="wheel wheel-right"></span>
+            <span className="bike-body"></span>
+          </div>
         </div>
 
-        <div className="hero-content">
-          <div>
-            <div className="eyebrow">COMMUTE TOGETHER</div>
+        {/* HERO CONTENT */}
+        <div className="hero-copy">
+          <div className="eyebrow">COMMUTE TOGETHER</div>
 
-            <h1>
-              Your route.<br/>
-              <em>Your people.</em>
-            </h1>
+          <h1>
+            Your route.
+            <br />
+            <em>Your people.</em>
+          </h1>
 
-            <p>
-              SmartRide connects drivers and passengers traveling along
-              similar routes, with transparent matching and safety-first controls.
-            </p>
+          <p>
+            SmartRide connects drivers and passengers traveling along
+            similar routes, with transparent matching and safety-first controls.
+          </p>
 
-            <div className="actions">
-              <button className="primary" onClick={onStart}>
-                Start riding
-              </button>
+          <div className="actions">
+            <button className="primary" onClick={onStart}>
+              Start riding
+            </button>
 
-              <button className="secondary" onClick={onStart}>
-                Offer a ride
-              </button>
+            <button className="secondary" onClick={onStart}>
+              Offer a ride
+            </button>
+          </div>
+        </div>
+
+        {/* ROUTE CARD */}
+        <div className="hero-card">
+          <div className="mapfake">
+            <span className="pin p1"></span>
+            <span className="pin p2"></span>
+            <span className="route"></span>
+
+            <div className="maplabel">
+              Smart route match
             </div>
           </div>
 
-          <div className="hero-card">
-            <div className="mapfake">
-              <span className="pin p1"></span>
-              <span className="pin p2"></span>
-              <span className="route"></span>
-              <div className="maplabel">
-                Smart route match
-              </div>
-            </div>
+          <div className="matchbox">
+            <b>92%</b>
 
-            <div className="matchbox">
-              <b>92%</b>
-              <span>route compatibility</span>
-              <small>
-                2.1 km pickup • 8 min difference
-              </small>
-            </div>
+            <span>
+              route compatibility
+            </span>
+
+            <small>
+              2.1 km pickup • 8 min difference
+            </small>
           </div>
         </div>
 
@@ -169,7 +193,6 @@ function Landing({onStart}){
           text="Only share the information needed for a safe ride."
         />
       </section>
-
     </div>
   );
 }
