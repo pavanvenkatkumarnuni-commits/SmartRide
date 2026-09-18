@@ -77,8 +77,102 @@ function Header({user,setPage,logout}){
     }
   </header>
 }
-function Landing({onStart}){return <div className="landing"><section className="hero"><div><div className="eyebrow">COMMUTE TOGETHER</div><h1>Your route.<br/><em>Your people.</em></h1><p>SmartRide connects drivers and passengers traveling along similar routes, with transparent matching and safety-first controls.</p><div className="actions"><button className="primary" onClick={onStart}>Start riding</button><button className="secondary" onClick={onStart}>Offer a ride</button></div></div><div className="hero-card"><div className="mapfake"><span className="pin p1"></span><span className="pin p2"></span><span className="route"></span><div className="maplabel">Smart route match</div></div><div className="matchbox"><b>92%</b><span>route compatibility</span><small>2.1 km pickup • 8 min difference</small></div></div></section><section className="features"><Feature icon="⌁" title="Route-aware" text="Matches are based on route overlap, proximity and timing."/><Feature icon="✓" title="Verified profiles" text="Verification status and ratings are visible before you join."/><Feature icon="↗" title="Built for commutes" text="Save recurring routes and find people going your way."/><Feature icon="◈" title="Private by design" text="Only share the information needed for a safe ride."/></section></div>}
+function Landing({onStart}){
+  return (
+    <div className="landing">
 
+      <section className="hero">
+
+        {/* Dynamic road traffic */}
+        <div className="road-scene">
+          <div className="road">
+            <div className="lane lane1"></div>
+            <div className="lane lane2"></div>
+            <div className="lane lane3"></div>
+          </div>
+
+          <div className="vehicle car car1">🚗</div>
+          <div className="vehicle car car2">🚙</div>
+          <div className="vehicle bike bike1">🏍️</div>
+          <div className="vehicle bike bike2">🛵</div>
+        </div>
+
+        <div className="hero-content">
+          <div>
+            <div className="eyebrow">COMMUTE TOGETHER</div>
+
+            <h1>
+              Your route.<br/>
+              <em>Your people.</em>
+            </h1>
+
+            <p>
+              SmartRide connects drivers and passengers traveling along
+              similar routes, with transparent matching and safety-first controls.
+            </p>
+
+            <div className="actions">
+              <button className="primary" onClick={onStart}>
+                Start riding
+              </button>
+
+              <button className="secondary" onClick={onStart}>
+                Offer a ride
+              </button>
+            </div>
+          </div>
+
+          <div className="hero-card">
+            <div className="mapfake">
+              <span className="pin p1"></span>
+              <span className="pin p2"></span>
+              <span className="route"></span>
+              <div className="maplabel">
+                Smart route match
+              </div>
+            </div>
+
+            <div className="matchbox">
+              <b>92%</b>
+              <span>route compatibility</span>
+              <small>
+                2.1 km pickup • 8 min difference
+              </small>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <section className="features">
+        <Feature
+          icon="⌁"
+          title="Route-aware"
+          text="Matches are based on route overlap, proximity and timing."
+        />
+
+        <Feature
+          icon="✓"
+          title="Verified profiles"
+          text="Verification status and ratings are visible before you join."
+        />
+
+        <Feature
+          icon="↗"
+          title="Built for commutes"
+          text="Save recurring routes and find people going your way."
+        />
+
+        <Feature
+          icon="◈"
+          title="Private by design"
+          text="Only share the information needed for a safe ride."
+        />
+      </section>
+
+    </div>
+  );
+}
 function Feature({icon,title,text}){return <div className="feature"><i>{icon}</i><h3>{title}</h3><p>{text}</p></div>}
 
 function Auth({mode,setMode,onLogin,notify}){const [f,setF]=useState({name:"",email:"",password:"",phone:""});const submit=async e=>{e.preventDefault();try{const d=await api("/auth/"+(mode==="login"?"login":"signup"),{method:"POST",body:JSON.stringify(f)});localStorage.setItem("smartride_token",d.token);onLogin(d.user)}catch(x){notify(x.message)}};return <div className="authwrap"><form className="panel auth" onSubmit={submit}><div className="eyebrow">{mode==="login"?"WELCOME BACK":"JOIN SMARTRIDE"}</div><h2>{mode==="login"?"Log in":"Create your account"}</h2>{mode==="signup"&&<input placeholder="Full name" required value={f.name} onChange={e=>setF({...f,name:e.target.value})}/>}<input type="email" placeholder="Email address" required value={f.email} onChange={e=>setF({...f,email:e.target.value})}/>{mode==="signup"&&<input placeholder="Phone (optional)" value={f.phone} onChange={e=>setF({...f,phone:e.target.value})}/>}<input type="password" placeholder="Password (8+ characters)" minLength="8" required value={f.password} onChange={e=>setF({...f,password:e.target.value})}/><button className="primary full">{mode==="login"?"Log in":"Create account"}</button><button type="button" className="link center" onClick={()=>setMode(mode==="login"?"signup":"login")}>{mode==="login"?"Need an account? Sign up":"Already registered? Log in"}</button></form></div>}
